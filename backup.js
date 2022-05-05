@@ -1,3 +1,4 @@
+
 // Place your server entry point code here
 // 🌟 importing packages:
 // express for API
@@ -92,19 +93,35 @@ if(args.port) {
 // ENDPOINTS:
 // what is needed:
 
+// A web interface with: // a landing page <div> //     an explanation of the game and basic instructions
+// a navigation of some kind using buttons that will highlight the active <div> and hide others
 // a flip-many-coins <div>
 //     a button that makes an API call to /app/flip/ and then presents the resulting data to the person using the interface
 //     a graphical representation of the resulting coin flips
 //     summary information
+// a guess-flip <div>
+//     Two buttons that make an API call to /app/flip/call and then present the resulting data to the person using the interface
+//     a graphical representation of the guess, and the actual result of the coin flip
+//     win or loss
+// Document the API endpoints listed in README.md based on how they actually behave (for those that exist) and how they should behave (for those yet to be implemented).
+// This is an exercise in planning and scoping as much as anything else.
+// Think about the information that YOU would want or need to work with this app and put it in the README.md
+// Package structure
+// Modularize parts of your package and put them into different subdirectories. You have been provided with a basic structure to do this.
+// Put public web files in ./public/
+// Place your database script file in ./src/services/
+// Write any log files into `./log/
+// Store any database files in ./data/
+// Consider other ways to move code out of index.js and into other parts of the package structure.
+// Be sure to adjust the paths you are using to create files and call dependencies.
+
+//modify this to my needs
 app.post('/app/flip/coins/', (req, res, next) => {
     const flips = coinFlips(req.body.number)
     const count = countFlips(flips)
     res.status(200).json({"raw":flips,"summary":count})
 })
-// a guess-flip <div>
-//     Two buttons that make an API call to /app/flip/call and then present the resulting data to the person using the interface
-//     a graphical representation of the guess, and the actual result of the coin flip
-//     win or loss
+//modify this to my needs
 app.post('/app/flip/call/', (req, res, next) => {
     const game = flipACoin(req.body.guess)
     res.status(200).json(game)
@@ -114,7 +131,8 @@ app.post('/app/flip/call/', (req, res, next) => {
 //     a graphical representation of the resulting coin flip
 app.get('/app/flip/', (req, res, next) => {
     const flip = coinFlip()
-    res.status(200).json({"flip":flip})
+    // const count = countFlips(flips)
+    res.status(200).json({"raw":flip,"summary":count})
 });
 //modify this to my needs
 app.get('/app/flips/:number', (req, res, next) => {
@@ -157,3 +175,5 @@ const server = app.listen(port, () => {
 app.use((req, res) => {
     res.status(404).send("Endpoint does not exist 😞");
 })
+
+
